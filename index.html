@@ -3,365 +3,391 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Kinusaiga: tu primer cuadro de telas sin coser ni dibujar</title>
+<title>Kinusaiga Master</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,600;1,600&family=Manrope:wght@400;600;700;800&family=Poppins:ital,wght@0,500;0,600;0,700;1,500;1,600&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --papel: #f3ede2;
-    --tinta: #1d2a2f;
-    --tinta-suave: #4d5b5f;
-    --indigo: #263a5c;
-    --ocre: #b9853a;
-    --linea: #d8cdb8;
-    --blanco: #fbf9f4;
+  :root{
+    --cream:#FBF4EA; --warm:#F2E4CF; --dark:#33200F; --brown:#5A3524; --deep:#3E2418;
+    --accent:#B5623C; --gold:#D99A3D; --gold-light:#F0C784; --text:#5B4A38; --muted:#A79A86;
+    --green:#27AE5C; --green-light:#3DD865;
   }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: "Source Sans 3", Arial, sans-serif; background: var(--papel); color: var(--tinta); font-size: 17px; line-height: 1.6; padding-bottom: 84px; }
-  .wrap { max-width: 520px; margin: 0 auto; padding: 0 22px; }
-  section { padding: 40px 0; border-bottom: 1px solid var(--linea); }
-  section:last-of-type { border-bottom: none; }
-  .kicker { font-size: 13px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--ocre); margin-bottom: 10px; }
-  h1, h2, h3 { font-family: "DM Serif Display", Georgia, serif; font-weight: 400; color: var(--tinta); }
-  h1 { font-size: 31px; line-height: 1.2; margin-bottom: 16px; }
-  h2 { font-size: 26px; line-height: 1.25; margin-bottom: 14px; }
-  h3 { font-size: 20px; line-height: 1.3; margin-bottom: 6px; }
-  p { color: var(--tinta-suave); margin-bottom: 12px; }
-  .lead { font-size: 18px; color: var(--tinta); }
-  .box { background: var(--blanco); border: 1px solid var(--linea); padding: 20px; margin-bottom: 12px; }
-  .lista { list-style: none; }
-  .lista li { padding: 10px 0; border-bottom: 1px solid var(--linea); color: var(--tinta-suave); }
-  .lista li:last-child { border-bottom: none; }
-  .lista li strong { color: var(--tinta); font-weight: 600; }
-  .paso { display: flex; gap: 14px; padding: 14px 0; border-bottom: 1px solid var(--linea); }
-  .paso:last-child { border-bottom: none; }
-  .paso .n { font-family: "DM Serif Display", Georgia, serif; font-size: 28px; color: var(--ocre); line-height: 1; min-width: 26px; }
-  .paso h3 { font-size: 18px; margin-bottom: 2px; }
-  .paso p { margin: 0; font-size: 16px; }
-  .cita { font-style: italic; color: var(--tinta); margin-bottom: 8px; }
-  .autor { font-size: 14px; color: var(--tinta-suave); margin: 0; }
-  .ayuda { font-size: 14px; color: var(--ocre); font-weight: 600; margin-bottom: 6px; }
-  .btn { display: block; width: 100%; background: var(--indigo); color: #fff; text-decoration: none; text-align: center; padding: 16px 20px; border-radius: 2px; font-weight: 700; font-size: 17px; letter-spacing: .3px; margin: 16px 0 10px; }
-  .btn-claro { background: var(--ocre); color: var(--tinta); }
-  .img { width: 100%; display: block; border: 1px solid var(--linea); margin: 18px 0; }
-  .micro { font-size: 14px; color: var(--tinta-suave); text-align: center; }
-  .etiqueta-linea { display: inline-block; font-size: 13px; color: var(--tinta-suave); border-top: 1px solid var(--ocre); padding-top: 6px; margin-bottom: 12px; }
-  .oferta { background: var(--indigo); color: #fff; padding: 30px 24px; text-align: center; }
-  .oferta h2 { color: #fff; }
-  .oferta p { color: #d9dfe8; }
-  .oferta .regular { text-decoration: line-through; color: #a9b4c6; margin-bottom: 0; }
-  .oferta .precio { font-family: "DM Serif Display", Georgia, serif; font-size: 48px; color: var(--ocre); line-height: 1.1; margin: 4px 0 8px; }
-  details { border-bottom: 1px solid var(--linea); padding: 16px 0; }
-  details:first-of-type { border-top: 1px solid var(--linea); }
-  summary { font-weight: 600; cursor: pointer; color: var(--tinta); list-style: none; font-size: 17px; }
-  summary::-webkit-details-marker { display: none; }
-  details p { margin-top: 8px; font-size: 16px; }
-  .barra { position: fixed; bottom: 0; left: 0; right: 0; background: var(--blanco); border-top: 1px solid var(--linea); padding: 10px 18px; display: flex; align-items: center; gap: 12px; z-index: 50; }
-  .barra .precio-fijo { font-family: "DM Serif Display", Georgia, serif; font-size: 22px; color: var(--indigo); min-width: 100px; }
-  .barra .btn { margin: 0; padding: 12px 14px; font-size: 15px; flex: 1; }
-  footer { padding: 28px 0; text-align: center; background: var(--tinta); }
-  footer p { font-size: 13px; color: #aab3b6; margin-bottom: 4px; }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:"Manrope",Arial,sans-serif;font-size:17px;line-height:1.7;color:var(--text);background:var(--cream);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  img{max-width:100%;height:auto;display:block}
+  a{text-decoration:none}
+
+  #barra-top{background:linear-gradient(90deg,var(--brown),var(--accent));color:#FFF;text-align:center;font-weight:600;font-size:14px;padding:11px;letter-spacing:.3px;box-shadow:0 2px 5px rgba(0,0,0,.1)}
+  #progreso{height:3px;width:100%;position:sticky;top:0;z-index:100}
+  #progreso-barra{height:100%;width:0%;background:linear-gradient(90deg,var(--accent),var(--gold))}
+
+  section{padding:50px 16px;position:relative}
+  .wrap{max-width:600px;margin:0 auto}
+  .wrap-wide{max-width:900px;margin:0 auto}
+  .bg-cream{background:var(--cream)}
+  .bg-warm{background:var(--warm)}
+  .bg-white{background:#FFF}
+  .bg-dark{background:linear-gradient(160deg,var(--brown) 0%,var(--deep) 50%,#2A1810 100%);color:#FFF}
+
+  h1,h2,h3{font-family:"Fraunces",Georgia,serif;color:var(--dark);line-height:1.2;letter-spacing:-.3px}
+  h1{font-size:clamp(30px,6vw,46px);font-style:italic;font-weight:600;text-align:center;margin-bottom:20px}
+  h2{font-size:clamp(27px,5vw,38px);font-style:italic;font-weight:600;text-align:center;margin-bottom:20px}
+  h2::after{content:"";display:block;width:50px;height:2px;background:linear-gradient(to right,var(--accent),var(--gold));margin:14px auto 0;border-radius:1px}
+  .bg-dark h2,.bg-dark h1{color:#FFF}
+  .bg-dark h2::after{background:linear-gradient(to right,var(--gold),var(--gold-light))}
+  h3{font-family:"Poppins",sans-serif;font-style:normal;font-size:19px;font-weight:700;margin-bottom:8px}
+
+  .eyebrow{font-size:11px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:var(--accent);text-align:center;margin-bottom:10px}
+  .eyebrow.light{color:var(--gold-light)}
+  .center{text-align:center}
+  p{margin-bottom:16px}
+  .lead{font-size:18px;line-height:1.75;text-align:center}
+
+  @keyframes revealIn{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+  .reveal{animation:revealIn .7s cubic-bezier(.25,.8,.25,1) both}
+
+  @keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+  @keyframes pulseGlow{0%,100%{box-shadow:0 0 0 rgba(217,154,61,0)}50%{box-shadow:0 0 22px rgba(217,154,61,.55)}}
+  @keyframes ctaGlow{0%,100%{box-shadow:0 4px 14px rgba(39,174,92,.45)}50%{box-shadow:0 6px 24px rgba(61,216,101,.6)}}
+  @keyframes shine{0%{transform:translateX(-120%)}100%{transform:translateX(220%)}}
+  .anim-up{animation:fadeUp .9s cubic-bezier(.25,.8,.25,1) both}
+  .anim-up.d1{animation-delay:.1s}.anim-up.d2{animation-delay:.25s}.anim-up.d3{animation-delay:.4s}
+
+  .cta{position:relative;overflow:hidden;isolation:isolate;display:block;width:100%;max-width:440px;margin:16px auto 0;padding:20px 30px;background:linear-gradient(180deg,var(--green-light) 0%,var(--green) 45%,#1E9248 100%);color:#FFF;text-align:center;font-family:"Manrope",sans-serif;font-weight:800;font-size:18px;letter-spacing:.5px;text-transform:uppercase;border-radius:8px;border-top:1px solid rgba(255,255,255,.4);border-bottom:3px solid rgba(0,0,0,.18);text-shadow:0 1px 2px rgba(0,0,0,.2);box-shadow:0 4px 14px rgba(39,174,92,.45);animation:ctaGlow 2s ease-in-out infinite;transition:transform .25s cubic-bezier(.34,1.56,.64,1)}
+  .cta:hover{transform:translateY(-2px) scale(1.01)}
+  .cta::after{content:"";position:absolute;top:0;left:0;width:40%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.35),transparent);transform:translateX(-120%);z-index:-1}
+  .cta:hover::after{animation:shine .9s ease}
+  .cta .arrow{display:inline-block;margin-left:8px;transition:transform .3s cubic-bezier(.34,1.56,.64,1)}
+  .cta:hover .arrow{transform:translateX(4px)}
+  .cta-sub{font-size:13px;color:var(--muted);text-align:center;margin-top:10px}
+  .bg-dark .cta-sub{color:rgba(255,255,255,.75)}
+
+  .card{background:#FFF;border:1px solid #F2E4CF;border-radius:10px;padding:22px;box-shadow:0 4px 10px rgba(46,26,16,.06);transition:transform .35s cubic-bezier(.25,.8,.25,1),box-shadow .35s;margin-bottom:14px}
+  .card:hover{transform:translateY(-3px);box-shadow:0 12px 26px rgba(46,26,16,.12)}
+  .card .tag{display:inline-block;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent);background:rgba(181,98,60,.08);border:1px solid rgba(181,98,60,.18);border-radius:4px;padding:4px 10px;margin-bottom:12px}
+  .card p{font-size:15.5px;line-height:1.65;margin-bottom:10px}
+  .value{text-decoration:line-through;color:var(--muted);margin-right:8px;font-size:16px}
+  .free{color:var(--green);font-weight:700;font-size:12px;letter-spacing:1.5px;text-transform:uppercase;background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.25);border-radius:3px;padding:4px 10px}
+
+  .steps{display:flex;flex-direction:column;gap:16px;margin-top:24px}
+  .step{background:#FFF;border:1px solid #F2E4CF;border-radius:12px;padding:24px 20px;text-align:center;box-shadow:0 4px 12px rgba(46,26,16,.06);transition:transform .35s cubic-bezier(.25,.8,.25,1)}
+  .step:hover{transform:translateY(-3px)}
+  .step .num{width:56px;height:56px;margin:0 auto 14px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--gold));color:#FFF;display:flex;align-items:center;justify-content:center;font-family:"Poppins",sans-serif;font-size:24px;font-weight:700;box-shadow:0 8px 18px rgba(181,98,60,.3)}
+
+  ul.checks{list-style:none;display:flex;flex-direction:column;gap:14px;max-width:540px;margin:22px auto 0}
+  ul.checks li{position:relative;padding-left:32px;font-size:16px;line-height:1.65}
+  ul.checks li::before{content:"✓";position:absolute;left:0;top:0;color:var(--green);font-weight:800;font-size:18px}
+
+  .slider{position:relative;overflow:hidden;margin-top:24px;-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+  .track{display:flex;gap:16px;width:max-content;will-change:transform}
+  .slide{flex:0 0 auto;width:260px;height:260px;border-radius:16px;overflow:hidden;background:linear-gradient(160deg,#F7EFE2,#EDE0CC);border:1px solid rgba(181,98,60,.18);box-shadow:0 10px 26px rgba(46,26,16,.12)}
+  .slide img{width:100%;height:100%;object-fit:cover}
+  .slide.placeholder{display:flex;align-items:center;justify-content:center;color:var(--accent);font-style:italic;padding:16px;text-align:center}
+
+  .placeholder{background:#F7EFE2;border:1px dashed var(--accent);border-radius:8px;padding:18px;color:var(--accent);font-style:italic;text-align:center;font-size:15px}
+
+  .price-box{background:linear-gradient(160deg,var(--brown),#33200F);border:1px solid rgba(217,154,61,.5);border-radius:10px;padding:26px 22px;text-align:center;animation:pulseGlow 3s infinite;color:#FFF;margin-top:20px}
+  .price-old{font-family:"Poppins",sans-serif;font-size:18px;color:#BBB;text-decoration:line-through}
+  .price-new{font-family:"Poppins",sans-serif;font-size:56px;font-weight:700;color:var(--gold-light);letter-spacing:-1px;line-height:1.05}
+  .price-note{font-size:15px;color:#CCC;margin-top:4px}
+  .trust{display:flex;justify-content:space-around;flex-wrap:wrap;gap:8px;margin-top:16px;padding-top:16px;border-top:1px solid rgba(224,161,131,.3);color:#DDD;font-size:13px;font-weight:600}
+
+  .countdown{display:flex;justify-content:center;gap:10px;margin:18px 0 6px}
+  .countdown .seg{background:rgba(0,0,0,.35);border:1px solid rgba(224,161,131,.25);border-radius:6px;min-width:68px;padding:12px 10px;text-align:center}
+  .countdown .num{font-family:"Poppins",sans-serif;font-size:34px;font-weight:700;color:#FFF;line-height:1}
+  .countdown .lbl{font-size:10px;text-transform:uppercase;letter-spacing:1.5px;color:rgba(255,255,255,.7);margin-top:6px;font-weight:600}
+  .countdown-end{font-size:14px;color:var(--gold-light);text-align:center;margin-top:8px;font-weight:600}
+
+  .faq-item{background:#FFF;border:1px solid #F2E4CF;border-radius:6px;margin-bottom:10px;overflow:hidden;box-shadow:0 4px 10px rgba(46,26,16,.06)}
+  .faq-q{padding:17px 18px;font-weight:600;font-size:16px;cursor:pointer;color:var(--dark);display:flex;justify-content:space-between;align-items:center;gap:12px}
+  .faq-q span{font-size:24px;font-weight:700;color:var(--accent);transition:transform .25s}
+  .faq-a{max-height:0;overflow:hidden;transition:max-height .3s ease-out;padding:0 18px}
+  .faq-a div{padding:16px 0;border-top:1px solid #F2E4CF;line-height:1.75}
+  .faq-item.open .faq-a{max-height:400px}
+  .faq-item.open .faq-q span{transform:rotate(45deg)}
+
+  footer{background:#33200F;color:#A08FBA;text-align:center;padding:24px 16px;font-size:13px;line-height:1.7}
+
+  @media (max-width:480px){
+    section{padding:42px 14px}
+    .slide{width:220px;height:220px}
+    .price-new{font-size:46px}
+    .cta{font-size:16px;padding:17px 16px}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *{animation:none!important;transition:none!important}
+    .reveal{opacity:1;transform:none}
+  }
 </style>
 </head>
 <body>
 
-<!-- ============ 1. PROMESA ============ -->
-<section>
-  <div class="wrap">
-    <p class="kicker">Guía digital de Kinusaiga</p>
-    <h1>Haz tu primer cuadro de telas en 30 días, sin coser ni dibujar, aunque nunca hayas hecho una manualidad</h1>
-    <p class="lead">Con el método Kinusaiga, una guía paso a paso te lleva desde preparar la base hasta el acabado, usando retazos que ya tienes en casa.</p>
-    <img class="img" src="4" alt="Cuadro de Kinusaiga terminado">
-    <a class="btn" href="https://pay.hotmart.com/X108008484L">Quiero hacer mi primer cuadro</a>
-    <p class="micro">Acceso digital inmediato · Garantía de 7 días</p>
-  </div>
-</section>
+<div id="barra-top">Oferta de lanzamiento · Acceso inmediato</div>
+<div id="progreso"><div id="progreso-barra"></div></div>
 
-<!-- ============ 2. IDENTIFICACIÓN DEL PROBLEMA ============ -->
-<section>
-  <div class="wrap">
-    <p class="kicker">¿Te pasa algo de esto?</p>
-    <h2>Tienes telas guardadas, pero no sabes qué hacer con ellas</h2>
-    <ul class="lista">
-      <li>Guardas retazos "para algún día" y ese día nunca llega.</li>
-      <li>Te encantan los cuadros decorativos, pero hacer uno desde cero te parece complicado.</li>
-      <li>Viste tutoriales, te perdiste en el medio y no terminaste nada.</li>
-      <li>Te da miedo empezar y arruinar el material.</li>
-    </ul>
-    <p style="margin-top:16px; color:var(--indigo); font-weight:600;">Si te identificas con una sola de estas, esta guía es para ti.</p>
-  </div>
-</section>
-
-<!-- ============ 3. PARA QUIÉN ES ============ -->
-<section>
-  <div class="wrap">
-    <p class="kicker">¿Es para ti?</p>
-    <h2>Quién debería comprarla</h2>
-    <div class="box">
-      <h3>Sí es para ti si:</h3>
-      <ul class="lista">
-        <li>Nunca hiciste una manualidad así y quieres empezar desde cero.</li>
-        <li>Quieres decorar tu casa o regalar piezas hechas a mano.</li>
-        <li>Te interesa explorar si este arte puede convertirse en un emprendimiento.</li>
-      </ul>
-    </div>
-    <div class="box">
-      <h3>No es para ti si:</h3>
-      <ul class="lista">
-        <li>Buscas un curso con certificado o clases en vivo.</li>
-        <li>Quieres aprender costura o pintura tradicional.</li>
-      </ul>
+<!-- 1. HERO: promesa -->
+<section class="bg-cream" style="padding-top:30px">
+  <div class="wrap center">
+    <div class="eyebrow anim-up">Kinusaiga Master · Sin coser · Sin dibujar · Sin experiencia</div>
+    <h1 class="anim-up d1">De la ropa que ya no usás a tu primer cuadro hecho a mano.</h1>
+    <p class="lead anim-up d2">Usás la ropa que ya tenés, seguís cada paso de la guía y terminás tu propia pieza para colgar, regalar o vender.</p>
+    <a class="cta anim-up d3" href="#comprar">Quiero mi guía <span class="arrow">→</span></a>
+    <p class="cta-sub">Pago único · Acceso inmediato</p>
+    <!-- ESPACIO PARA TU PRODUCTO: reemplazá el placeholder por <img src="tu-foto.jpg" alt="Kinusaiga Master"> -->
+    <div style="margin:28px auto 0;max-width:340px">
+      <div class="placeholder">[IMAGEN: mockup de tu producto, portada o pieza terminada]</div>
     </div>
   </div>
 </section>
 
-<!-- ============ 4. SOLUCIÓN: EL MÉTODO ============ -->
-<section>
+<!-- 2. QUÉ ES -->
+<section class="bg-warm reveal">
   <div class="wrap">
-    <p class="kicker">El método</p>
-    <h2>Kinusaiga: cuadros con textura, sin coser</h2>
-    <p>Las piezas se encastran sobre una base, y el resultado tiene color, textura y relieve. Trabajas con diseños de referencia que te muestran dónde va cada tela, así que no partes de una hoja en blanco.</p>
-    <img class="img" src="5" alt="Mano encastrando telas sobre la base de Kinusaiga">
-    <div class="paso"><span class="n">1</span><div><h3>Preparas la base</h3><p>Organizas tus materiales y el soporte antes de empezar.</p></div></div>
-    <div class="paso"><span class="n">2</span><div><h3>Transfieres el diseño</h3><p>Pasas el diseño de referencia a la base.</p></div></div>
-    <div class="paso"><span class="n">3</span><div><h3>Cortas e insertas las telas</h3><p>Eliges, recortas y encastras cada pieza con la guía de las fotos.</p></div></div>
-    <div class="paso"><span class="n">4</span><div><h3>Terminas y enmarcas</h3><p>Das los acabados para que tu cuadro esté listo para colgar.</p></div></div>
-    <img class="img" src="6" alt="Materiales y base preparada">
+    <div class="eyebrow">¿Qué es el Kinusaiga?</div>
+    <h2>Una técnica para crear cuadros con telas</h2>
+    <p class="lead">Consiste en encastrar retazos de tela o ropa que ya no usás sobre una base de telgopor de alta densidad, siguiendo una guía visual. El resultado es una pieza con relieve, para decorar, regalar o vender.</p>
+    <p class="lead">No se cose ni se dibuja.</p>
   </div>
 </section>
 
-<!-- ============ 5. QUÉ INCLUYE Y PARA QUÉ SIRVE ============ -->
-<section>
+<!-- 3. PARA QUIÉN ES -->
+<section class="bg-white reveal">
   <div class="wrap">
-    <p class="kicker">Lo que recibes</p>
-    <h2>Una guía de 44 páginas con fotos de cada etapa</h2>
-    <div class="box">
-      <h3>Paso a paso detallado</h3>
-      <p>Aprendes a preparar la base, transferir diseños y cortar e insertar las telas con precisión, sin adivinar el siguiente paso.</p>
-    </div>
-    <div class="box">
-      <h3>Técnicas y acabados</h3>
-      <p>Aprendes a combinar colores y texturas para que tu cuadro se vea terminado, no improvisado.</p>
-    </div>
-    <div class="box">
-      <h3>Evita errores</h3>
-      <p>Identificas las fallas más comunes y cómo corregirlas antes de arruinar tu pieza.</p>
-    </div>
-    <div class="box">
-      <h3>Nuevos diseños</h3>
-      <p>Creas tus propios diseños, para que tu trabajo no dependa siempre de copiar.</p>
-    </div>
-    <!-- VISTA PREVIA: usa SOLO páginas reales exportadas de tu PDF (no capturas de mockups).
-         Cada imagen debe mostrar una página distinta de la guía; quita las que no tengas. -->
-    <p class="kicker" style="margin-top:24px;">Así se ve la guía por dentro</p>
-    <img class="img" src="[PAGINA_GUIA_1]" alt="Página de la guía: contenido completo">
-    <img class="img" src="[PAGINA_GUIA_2]" alt="Página de la guía: por qué aprender kinusaiga">
-    <img class="img" src="[PAGINA_GUIA_3]" alt="Página de la guía: cómo elegir un diseño apto">
-    <img class="img" src="[PAGINA_GUIA_4]" alt="Página de la guía: color, textura y composición">
-    <img class="img" src="[PAGINA_GUIA_5]" alt="Página de la guía: crear tus propios diseños">
-    <img class="img" src="[PAGINA_GUIA_6]" alt="Página de la guía: plan de acción">
-  </div>
-</section>
-
-<!-- ============ 6. LO QUE CAMBIA ============ -->
-<section>
-  <div class="wrap">
-    <p class="kicker">Lo que cambia para ti</p>
-    <h2>Dejas de adivinar y empiezas a crear</h2>
-    <ul class="lista">
-      <li>Decorar tus espacios con piezas de color y textura.</li>
-      <li>Preparar regalos diferentes para cumpleaños o personas especiales.</li>
-      <li>Explorar una actividad creativa desde casa.</li>
-      <li>Evaluar si tus cuadros tienen interés como producto, cuando domines la técnica.</li>
+    <div class="eyebrow">¿Para quién es?</div>
+    <h2>Esta guía es para ti si...</h2>
+    <ul class="checks">
+      <li><strong>Nunca cosiste ni dibujaste</strong> y pensás que las manualidades son para otras personas.</li>
+      <li><strong>Tenés ropa vieja y retazos guardados</strong> que no sabés cómo aprovechar.</li>
+      <li><strong>Querés decorar tu casa o regalar algo hecho por vos</strong> con un significado real.</li>
+      <li><strong>Te interesa vender tus propias piezas más adelante</strong>, sin montar un negocio desde cero.</li>
     </ul>
   </div>
 </section>
 
-<!-- ============ 7. EMPRENDER ============ -->
-<section>
+<!-- 4. CÓMO FUNCIONA: 3 pasos -->
+<section class="bg-white reveal">
   <div class="wrap">
-    <p class="kicker">Si quieres vender</p>
-    <h2>Del primer cuadro a tu primera venta</h2>
-    <p>La guía te muestra cómo evaluarlo, paso a paso.</p>
-    <div class="paso"><span class="n">1</span><div><h3>Domina la técnica</h3><p>Haz varias piezas hasta que tus cuadros salgan con calidad constante.</p></div></div>
-    <div class="paso"><span class="n">2</span><div><h3>Calcula tu costo</h3><p>Materiales y tiempo por pieza. La plantilla del Bono 2 te ayuda.</p></div></div>
-    <div class="paso"><span class="n">3</span><div><h3>Define tu precio</h3><p>Que cubra tus costos y tu tiempo, y que se compare con otros artesanos de tu zona.</p></div></div>
-    <div class="paso"><span class="n">4</span><div><h3>Fotografía tu pieza</h3><p>Luz natural y fondo sencillo, mostrando el relieve.</p></div></div>
-    <div class="box" style="margin-top:16px;">
-      <p style="margin:0;">La guía te enseña la técnica. Conseguir compradores depende de tus costos, tu precio, la demanda de tu zona y tu estrategia de venta.</p>
+    <div class="eyebrow">Cómo funciona</div>
+    <h2>Tres pasos, sin experiencia previa</h2>
+    <div class="steps">
+      <div class="step"><div class="num">1</div><h3>Elegís tus materiales</h3><p>Usás ropa vieja y retazos que ya tenés. Solo comprás una base de telgopor.</p></div>
+      <div class="step"><div class="num">2</div><h3>Seguís la guía</h3><p>Cada etapa tiene su explicación visual, para que no tengas que adivinar qué sigue.</p></div>
+      <div class="step"><div class="num">3</div><h3>Terminás tu pieza</h3><p>Al final tenés un cuadro listo para colgar, regalar o vender.</p></div>
     </div>
   </div>
 </section>
 
-<!-- ============ 8. TESTIMONIOS (solo con permiso confirmado) ============ -->
-<section>
-  <div class="wrap">
-    <p class="kicker">Lo que dicen las alumnas</p>
-    <h2>Comentarios de quienes ya hicieron su cuadro</h2>
-    <div class="box">
-      <p class="cita">"Hola profe, super bien me ha ido. Pensé que iba a necesitar comprar telas o materiales caros, pero la verdad es que usé la ropa vieja que tenía guardada y pensaba botar. Estoy encantada con este hermoso arte."</p>
-      <img class="img" src="1" alt="Cuadro de [nombre o inicial] (foto original, con permiso)">
-      <p class="autor">— Daniela Torres, Colombia </p>
-    </div>
-    <div class="box">
-      <p class="cita">"Profe, ¿cómo está? Ya terminé mi primer cuadro de Kinusaiga y tengo que admitir que, aunque elegí un diseño sencillo, me gusta mucho el resultado. Ya quiero empezar a hacer el siguiente cuadro."</p>
-      <img class="img" src="2" alt="Cuadro de [nombre o inicial] (foto original, con permiso)">
-      <p class="autor">— Sandra Pérez, México </p>
-    </div>
-    <div class="box">
-      <p class="cita">"Hola profe, pasaba a saludarla y contarle que ya estoy empezando mi primer cuadro. Me leí primero toda la guía y ahora voy con la segunda lectura, pero mientras practico haciendo mi primer cuadro me ha encantado todo. De verdad, mil gracias por enseñar este bello arte."</p>
-      <img class="img" src="3" alt="Cuadro de [nombre o inicial] (foto original, con permiso)">
-      <p class="autor">— Carmen Araya, España </p>
+<!-- 5. QUÉ INCLUYE: muestra de la guía -->
+<section class="bg-cream reveal">
+  <div class="wrap-wide">
+    <div class="eyebrow">Qué incluye</div>
+    <h2>Una guía completa, con imágenes de cada paso</h2>
+    <p class="lead">44 páginas con el método visual, pensadas para que avances a tu ritmo.</p>
+    <div class="slider">
+      <div class="track" id="track-1">
+        <div class="slide placeholder">[IMAGEN: página 1 de la guía]</div>
+        <div class="slide placeholder">[IMAGEN: página 2 de la guía]</div>
+        <div class="slide placeholder">[IMAGEN: página 3 de la guía]</div>
+        <div class="slide placeholder">[IMAGEN: página 4 de la guía]</div>
+        <div class="slide placeholder">[IMAGEN: página 5 de la guía]</div>
+        <div class="slide placeholder">[IMAGEN: página 6 de la guía]</div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- ============ 9. AUTORIDAD (BLOQUEANTE: completar antes de publicar) ============
-     Este bloque lo pide el marco de página ganadora: explica por qué confiar en quien creó la oferta.
-     Completa con tus datos reales y quita los comentarios.
-
-<section>
+<!-- 6. MATERIALES -->
+<section class="bg-warm reveal">
   <div class="wrap">
-    <p class="kicker">Quién te enseña</p>
-    <h2>[Tu nombre]</h2>
-    <img class="img" src="[FOTO_INSTRUCTORA]" alt="[Tu nombre]">
-    <p>[Experiencia real con la técnica: cuánto tiempo la practicas, cuántos cuadros has hecho, qué has aprendido.]</p>
-    <p>[Por qué creaste esta guía: qué problema viviste que te llevó a enseñarla.]</p>
+    <div class="eyebrow">Materiales</div>
+    <h2>Lo que necesitás, fácil de conseguir</h2>
+    <p class="lead">Ropa vieja, retazos de tela y telgopor de alta densidad. Sin gastar de más.</p>
   </div>
 </section>
--->
 
-<!-- ============ 10. BONOS: QUÉ RESUELVE CADA UNO ============ -->
-<section>
+<!-- 7. BONOS -->
+<section class="bg-white reveal" id="bonos">
   <div class="wrap">
-    <p class="kicker">Incluidos con tu compra</p>
-    <h2>Recibes 3 bonos</h2>
-    <div class="box">
-      <p class="ayuda">Para ti si te preocupa equivocarte</p>
-      <p class="kicker" style="margin-bottom:4px;">Bono 1</p>
+    <div class="eyebrow">Incluido hoy</div>
+    <h2>3 bonos gratis con tu compra</h2>
+    <div class="card">
+      <span class="tag">Bono 1</span>
       <h3>7 errores que arruinan tu cuadro de tela y cómo evitarlos</h3>
-      <p>Los tropiezos más comunes de los principiantes, y cómo sortearlos.</p>
+      <p>Descubrí los tropiezos más comunes de los principiantes y aprendé a sortearlos sin frustrarte.</p>
+      <p><span class="value">US$27</span><span class="free">Gratis</span></p>
     </div>
-    <div class="box">
-      <p class="ayuda">Para ti si quieres vender</p>
-      <p class="kicker" style="margin-bottom:4px;">Bono 2</p>
-      <h3>Plantilla de precios y estrategia de ventas</h3>
-      <p>Cómo calcular cuánto cobrar por tus cuadros y empezar a vender.</p>
+    <div class="card">
+      <span class="tag">Bono 2</span>
+      <h3>Plantilla de precios + estrategia de ventas</h3>
+      <p>Calculá cuánto cobrar por tus cuadros y cómo posicionarte para vender tus primeras piezas.</p>
+      <p><span class="value">US$37</span><span class="free">Gratis</span></p>
     </div>
-    <div class="box">
-      <p class="ayuda">Para ti si no sabes qué diseñar</p>
-      <p class="kicker" style="margin-bottom:4px;">Bono 3</p>
+    <div class="card">
+      <span class="tag">Bono 3</span>
       <h3>27 plantillas de animales, objetos y naturaleza</h3>
-      <p>Diseños listos para calcar y empezar a trabajar de inmediato.</p>
+      <p>Una colección curada de diseños listos para calcar y empezar a trabajar de inmediato.</p>
+      <p><span class="value">US$47</span><span class="free">Gratis</span></p>
+    </div>
+    <p class="center" style="margin-top:10px"><strong>Valor total de los bonos: US$111</strong></p>
+  </div>
+</section>
+
+<!-- 8. VALOR Y PRECIO -->
+<section class="bg-dark reveal" id="comprar">
+  <div class="wrap">
+    <div class="eyebrow light">Acceso inmediato</div>
+    <h2>Kinusaiga Master</h2>
+    <div class="price-box">
+      <div class="price-old">Valor de los bonos: US$111</div>
+      <div class="price-new">US$14.99</div>
+      <div class="price-note">Pago único, sin suscripción · Acceso inmediato al confirmar la compra</div>
+      <div class="trust">
+        <span>🔒 Pago seguro</span>
+        <span>⚡ Descarga inmediata</span>
+      </div>
+    </div>
+
+    <!-- CONTADOR DE FECHA FIJA: cambiá la fecha por la real de cierre. Si no hay fecha, borrá este bloque. -->
+    <div class="countdown" id="countdown" data-end="2026-10-31T23:59:00-06:00">
+      <div class="seg"><div class="num" id="cd-d">--</div><div class="lbl">Días</div></div>
+      <div class="seg"><div class="num" id="cd-h">--</div><div class="lbl">Horas</div></div>
+      <div class="seg"><div class="num" id="cd-m">--</div><div class="lbl">Min</div></div>
+      <div class="seg"><div class="num" id="cd-s">--</div><div class="lbl">Seg</div></div>
+    </div>
+    <div class="countdown-end" id="cd-msg">Precio de lanzamiento hasta el cierre</div>
+
+    <a class="cta" href="#" style="margin-top:20px">Quiero mi guía · US$14.99 <span class="arrow">→</span></a>
+    <p class="cta-sub">Descarga inmediata · Pago único</p>
+  </div>
+</section>
+
+<!-- 9. GARANTÍA -->
+<section class="bg-cream reveal">
+  <div class="wrap center">
+    <h2>Compra sin riesgo</h2>
+    <div class="placeholder" style="margin-top:20px">[INSERTAR GARANTÍA REAL, solo si existe y la podés cumplir]</div>
+  </div>
+</section>
+
+<!-- 10. OBJECIONES Y PREGUNTAS FRECUENTES -->
+<section class="bg-warm reveal">
+  <div class="wrap">
+    <h2>Preguntas frecuentes</h2>
+    <div style="margin-top:24px">
+      <div class="faq-item">
+        <div class="faq-q">¿Necesito saber coser o dibujar?<span>+</span></div>
+        <div class="faq-a"><div>No. La tela se encastra sobre la base, no se cose, y trabajás con diseños listos para imprimir.</div></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">¿Y si no tengo materiales?<span>+</span></div>
+        <div class="faq-a"><div>Con ropa vieja, retazos y telgopor alcanza. Son materiales fáciles de conseguir.</div></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">¿Y si ya intenté con videos y no me salió?<span>+</span></div>
+        <div class="faq-a"><div>La guía va paso a paso, sin saltear etapas, y el bono de errores comunes te muestra cómo corregir los tropiezos más frecuentes.</div></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">¿Cómo y cuándo lo recibo?<span>+</span></div>
+        <div class="faq-a"><div>Es 100% digital. Al confirmar el pago recibís por email el acceso a la guía y a los 3 bonos.</div></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">¿Puedo vender lo que hago?<span>+</span></div>
+        <div class="faq-a"><div>Podés regalar, decorar o vender tus piezas. El bono de plantilla de precios te ayuda a calcular cuánto cobrar.</div></div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- ============ 11. OFERTA Y GARANTÍA ============ -->
-<section>
+<!-- 11. TESTIMONIOS: reemplazar por reales con nombre y permiso -->
+<section class="bg-white reveal">
   <div class="wrap">
-    <div class="oferta">
-      <p class="etiqueta-linea" style="color:#d9dfe8; border-color:var(--ocre);">Precio de lanzamiento</p>
-      <h2>Guía Kinusaiga completa + 3 bonos</h2>
-      <p class="regular">Precio regular: US$ 65</p>
-      <p class="precio">US$ 14.99</p>
-      <p>Pago único · Sin suscripciones · Acceso digital inmediato</p>
-      <a class="btn btn-claro" href="https://pay.hotmart.com/X108008484L">Sí, quiero hacer mi primer cuadro</a>
-      <p class="micro" style="color:#a9b4c6;">Pago procesado por Hotmart, con los métodos que la plataforma habilite en tu país</p>
-    </div>
-    <div class="box" style="margin-top:16px;">
-      <h3>Pruébala sin riesgo</h3>
-      <p style="margin:0;">Si en 7 días sientes que esta guía no es para ti, escríbenos y te devolvemos tu dinero. Sin preguntas.</p>
-    </div>
+    <div class="eyebrow">Testimonios</div>
+    <h2>Lo que dicen quienes ya empezaron</h2>
+    <div class="placeholder" style="margin-top:22px">[INSERTAR TESTIMONIO REAL con nombre y foto: primer cuadro terminado]</div>
+    <div class="placeholder" style="margin-top:14px">[INSERTAR TESTIMONIO REAL con nombre y foto: alguien que regaló o vendió una pieza]</div>
+    <div class="placeholder" style="margin-top:14px">[INSERTAR TESTIMONIO REAL con nombre y foto: alguien que se consideraba "poco manual"]</div>
   </div>
 </section>
 
-<!-- ============ 12. OBJECIONES ============ -->
-<section>
-  <div class="wrap">
-    <p class="kicker">Antes de decidir</p>
-    <h2>¿Dudas? Estas son las más comunes</h2>
-    <div class="box">
-      <h3>"Me preocupa comprar materiales y equivocarme"</h3>
-      <p>Antes de empezar revisas qué materiales necesitas y cómo preparar la base. Seguir las etapas en orden te evita improvisar.</p>
-    </div>
-    <div class="box">
-      <h3>"Ya vi tutoriales, pero no sé cómo unir los pasos"</h3>
-      <p>La guía reúne el proceso en un solo lugar, con fotos de cada etapa para consultar mientras trabajas.</p>
-    </div>
-  </div>
-</section>
-
-<!-- ============ 13. PREGUNTAS FRECUENTES ============ -->
-<section>
-  <div class="wrap">
-    <p class="kicker">Preguntas frecuentes</p>
-    <h2>Todo lo que necesitas saber</h2>
-    <details>
-      <summary>¿Cuánto tiempo tardo en terminar un cuadro?</summary>
-      <p>Depende del diseño que elijas y de tu práctica. [Tiempo real de tu prueba, por ejemplo: "En mis pruebas, una persona nueva lo terminó en X horas".]</p>
-    </details>
-    <details>
-      <summary>¿Necesito saber coser, bordar o dibujar?</summary>
-      <p>No. Las telas se encastran sobre la base, no se cosen, y los diseños de referencia te ayudan a empezar sin dibujar desde cero.</p>
-    </details>
-    <details>
-      <summary>¿Sirve si nunca he hecho una manualidad?</summary>
-      <p>Sí. La guía está pensada para empezar desde el principio.</p>
-    </details>
-    <details>
-      <summary>¿Qué materiales necesito?</summary>
-      <p>Dentro del ebook explicamos todos los materiales que necesitas, para que sepas exactamente qué comprar antes de empezar.</p>
-    </details>
-    <details>
-      <summary>¿Cómo recibo la guía?</summary>
-      <p>El acceso es inmediato: se entrega en cuanto se confirma el pago. Puedes consultarlo desde tu celular o computadora.</p>
-    </details>
-    <details>
-      <summary>¿Recibo un producto físico?</summary>
-      <p>No. Todo el material es digital.</p>
-    </details>
-    <details>
-      <summary>¿Puedo avanzar a mi ritmo?</summary>
-      <p>Sí. Puedes dividir el proyecto en varias sesiones.</p>
-    </details>
-    <details>
-      <summary>¿Puedo empezar a vender sin experiencia?</summary>
-      <p>Te recomendamos primero hacer tus propias piezas hasta dominar la técnica. La guía te enseña a calcular costos y precios, para que decidas con datos.</p>
-    </details>
-    <details>
-      <summary>¿Y si no me sirve?</summary>
-      <p>Tienes 7 días de garantía. Si no es para ti, te devolvemos tu dinero sin preguntas.</p>
-    </details>
-  </div>
-</section>
-
-<!-- ============ 14. CIERRE ============ -->
-<section>
-  <div class="wrap">
-    <div class="oferta">
-      <h2>Tu primer cuadro de telas, sin coser ni dibujar</h2>
-      <p class="regular">Precio regular: US$ 65</p>
-      <p class="precio">US$ 14.99</p>
-      <p style="font-size:14px;">Los resultados dependen también de tu práctica y de seguir la guía en orden.</p>
-      <a class="btn btn-claro" href="https://pay.hotmart.com/X108008484L">Quiero mi guía ahora</a>
-    </div>
+<!-- 12. CIERRE CON CTA -->
+<section class="bg-dark reveal">
+  <div class="wrap center">
+    <div class="eyebrow light">Empezá hoy</div>
+    <h2>Tu primer cuadro empieza esta noche</h2>
+    <p class="lead">Kinusaiga Master + 3 bonos por US$14.99. Pago único.</p>
+    <a class="cta" href="#comprar" style="margin-top:18px">Quiero mi guía · US$14.99 <span class="arrow">→</span></a>
   </div>
 </section>
 
 <footer>
-  <div class="wrap">
-    <p style="font-family:'DM Serif Display', Georgia, serif; font-size:18px; color:#f3ede2;">Kinusaiga Master</p>
-    <p>© 2026 Kinusaiga Master. Todos los derechos reservados. Los resultados individuales pueden variar.</p>
-  </div>
+  <p>© 2026 Kinusaiga Master · Todos los derechos reservados.</p>
+  <p>Producto 100% digital. Los resultados varían de una persona a otra.</p>
 </footer>
 
-<!-- ============ BARRA FIJA DE COMPRA ============ -->
-<div class="barra">
-  <div class="precio-fijo">US$ 14.99</div>
-  <a class="btn" href="https://pay.hotmart.com/X108008484L">Quiero mi guía</a>
-</div>
+<script>
+  (function(){
+    var bar=document.getElementById('progreso-barra');
+    window.addEventListener('scroll',function(){
+      var h=document.documentElement;
+      bar.style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight)*100)+'%';
+    },{passive:true});
+  })();
 
+  (function(){
+    var els=document.querySelectorAll('.reveal');
+    if(!('IntersectionObserver' in window)){els.forEach(function(e){e.classList.add('in');});return;}
+    var io=new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+    },{threshold:.12});
+    els.forEach(function(e){io.observe(e);});
+  })();
+
+  (function(){
+    var track=document.getElementById('track-1');
+    if(!track) return;
+    var x=0,speed=60,last=null,paused=false,half=0;
+    function measure(){ half=track.scrollWidth/2; }
+    window.addEventListener('load',measure); measure();
+    track.parentElement.addEventListener('mouseenter',function(){paused=true;});
+    track.parentElement.addEventListener('mouseleave',function(){paused=false;});
+    function step(t){
+      if(last==null) last=t;
+      var dt=(t-last)/1000; last=t;
+      if(!paused && half>0){ x-=speed*dt; if(-x>=half) x+=half; track.style.transform='translateX('+x+'px)'; }
+      requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  })();
+
+  document.querySelectorAll('.faq-q').forEach(function(q){
+    q.addEventListener('click',function(){
+      var item=q.parentElement, open=item.classList.contains('open');
+      document.querySelectorAll('.faq-item.open').forEach(function(i){i.classList.remove('open');});
+      if(!open) item.classList.add('open');
+    });
+  });
+
+  (function(){
+    var box=document.getElementById('countdown');
+    if(!box) return;
+    var end=new Date(box.getAttribute('data-end')).getTime();
+    function tick(){
+      var diff=Math.max(0,end-Date.now());
+      var d=Math.floor(diff/86400000), h=Math.floor(diff%86400000/3600000),
+          m=Math.floor(diff%3600000/60000), s=Math.floor(diff%60000/1000);
+      document.getElementById('cd-d').textContent=String(d).padStart(2,'0');
+      document.getElementById('cd-h').textContent=String(h).padStart(2,'0');
+      document.getElementById('cd-m').textContent=String(m).padStart(2,'0');
+      document.getElementById('cd-s').textContent=String(s).padStart(2,'0');
+      if(diff<=0){
+        document.getElementById('cd-msg').textContent='La oferta de lanzamiento terminó';
+        return;
+      }
+      setTimeout(tick,1000);
+    }
+    tick();
+  })();
+</script>
 </body>
 </html>
